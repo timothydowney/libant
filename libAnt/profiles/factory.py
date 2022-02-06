@@ -45,6 +45,13 @@ class Factory:
                 if deviceNumber in self._filter:
                     del self._filter[deviceNumber]
 
+    def identifyDevices(self, msg: BroadcastMessage):
+        with self._lock:
+            if self._filter is not None:
+                if msg.deviceNumber not in self._filter:
+                    return            
+            print('Device Id: {}, Type: {}, Page: {}'.format(msg.deviceNumber, msg.deviceType, msg.content[0]))
+
     def parseMessage(self, msg: BroadcastMessage):
         with self._lock:
             if self._filter is not None:
@@ -54,6 +61,7 @@ class Factory:
                 num = msg.deviceNumber
                 type = msg.deviceType
                 if type == 11: # Quick patch to filter out power messages with non-power info
+                    # page 16 (0x10) is the "Standard – Power Only" page
                     if msg.content[0] != 16:
                         return
                 pmsg = self.types[type](msg, self._messages[(num, type)] if (num, type) in self._messages else None)

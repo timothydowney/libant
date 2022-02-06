@@ -14,7 +14,7 @@ class ProfileMessage:
         self.firstTimestamp = previous.firstTimestamp if previous is not None else self.timestamp
 
     def __str__(self):
-        return str(self.msg.deviceNumber)
+        return '[{: >5}]'.format(self.msg.deviceNumber)
 
     @staticmethod
     def decode(cls, msg: BroadcastMessage):

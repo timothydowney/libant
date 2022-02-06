@@ -9,7 +9,7 @@ class HeartRateProfileMessage(ProfileMessage):
         super().__init__(msg, previous)
 
     def __str__(self):
-        return f'{self.heartrate}'
+        return '{} Heart Rate: {}'.format(super().__str__(), self.heartrate)
 
     @lazyproperty
     def heartrate(self):

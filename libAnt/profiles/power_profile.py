@@ -9,7 +9,7 @@ class PowerProfileMessage(ProfileMessage):
     maxEventCount = 256
 
     def __str__(self):
-        return super().__str__() + ' Power: {0:.0f}W'.format(self.averagePower)
+        return '{0} Power: {1:.0f}W'.format(super().__str__(), self.averagePower)
 
     @lazyproperty
     def dataPageNumber(self):

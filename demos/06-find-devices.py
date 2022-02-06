@@ -17,5 +17,10 @@ def eCallback(e):
 with Node(SerialDriver('/dev/ttyUSB0'), 'SerialNode1') as n:
     n.enableRxScanMode()
     f = Factory(callback)
-    n.start(f.parseMessage, eCallback)
+
+    f.enableFilter()
+    f.addToFilter(15211) # heart rate monitor
+    #f.addToFilter(7103)  # tacx neo2t
+    
+    n.start(f.identifyDevices, eCallback)
     sleep(30)  # Listen for 30sec
